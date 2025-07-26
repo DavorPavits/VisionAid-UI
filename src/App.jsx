@@ -44,7 +44,7 @@ function App() {
     showMessage("Uploading image...", "info");
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/", {
+      const response = await fetch("http://127.0.0.1:5000", {
         method: "POST",
         body: formData,
       });
@@ -52,7 +52,12 @@ function App() {
       const data = await response.json();
 
       if (response.ok) {
-        showMessage(data.message, "success");
+        showMessage(
+          `Prediction: ${data.prediction} (Confidence: ${(
+            data.probability * 100
+          ).toFixed(2)}%)`,
+          "success"
+        );
         setSelectedFile(null);
         setFileName("Choose File");
       } else {
